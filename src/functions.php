@@ -32,3 +32,23 @@ function random_num($length)
 
     return $text;
 }
+
+function function_alert($message)
+{
+    echo "<script>alert('$message');</script>";
+}
+
+function set_user_navigation()
+{
+    $styleUser = "";
+    $styleGuest = "";
+    if (isset($_SESSION["user_id"])) {
+        $styleUser = "style='display:block;'";
+        $styleGuest = "style='display:none;'";
+    } else {
+        $styleUser = "style='display:none;'";
+        $styleGuest = "style='display:block;'";
+    }
+
+    return array($styleUser, $styleGuest);
+}

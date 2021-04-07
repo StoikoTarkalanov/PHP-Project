@@ -1,0 +1,33 @@
+.adjusting-position {
+    position: relative;
+    left: 380px;
+    top: 70px;
+}
+
+.form {
+    width: 85%;
+    max-width: 600px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    box-shadow: 0 0 3px black;
+    font-family: "DM Sans", sans-serif;
+    color: #3c71fe;
+}
+
+.btn {
+    background: #9b59b6;
+    padding: 14px;
+    border-radius: 10px 10px 10px 10px;
+    color: white;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 8px;
+    width: 20%;
+}
+
+.l-field {
+    color: black;
+}

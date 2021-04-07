@@ -2,14 +2,16 @@
 session_start();
 
 include('conection.php');
+include("functions.php");
 
-$sql = "SELECT date_post, title, company, location from created_posts";
-$data = $conn2->query($sql);
+$styleData = set_user_navigation();
 
-$allData = mysqli_fetch_all($data, MYSQLI_ASSOC);
+$query = "SELECT * from created_posts";
+$result = mysqli_query($conn2, $query);
+
+$allData = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,15 +24,23 @@ $allData = mysqli_fetch_all($data, MYSQLI_ASSOC);
     <link rel="preconnect" href="https://fonts.gstatic.com">
 
     <link rel="stylesheet" href="../css/master.css">
+    <link rel="stylesheet" href="../css/nav.css">
+    <link rel="stylesheet" href="../css/footer.css">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 
-<header class="site-wrapper">
-    <a href="login.php">Login</a>
-    <a href="register.php">Register</a>
-    <a href="logout.php">Logout</a>
-    <a href="createPage.php">Create</a>
-</header>
+<nav id="user" class="nav-bar" <?php echo $styleData[0]; ?>>
+    <a class="a-button a-btn" href="editPage.php">My Offers</a>
+    <a class="a-button a-btn" href="singlePage.php">Single Offer</a>
+    <a class="a-button a-btn" href="createPage.php">Create Offer</a>
+    <a class="a-button a-btn" href="logout.php">Logout</a>
+</nav>
+
+<nav id="guest" class="nav-bar" <?php echo $styleData[1]; ?>>
+    <a class="a-button a-btn" href="singlePage.php">Single Offer</a>
+    <a class="a-button a-btn" href="login.php">Login</a>
+    <a class="a-button a-btn" href="register.php">Register</a>
+</nav>
 
 <body>
     <div class="site-wrapper">
@@ -44,11 +54,11 @@ $allData = mysqli_fetch_all($data, MYSQLI_ASSOC);
 
                 <li class="job-card">
                     <div class="job-primary">
-                        <h2 class="job-title"><a href="#">
+                        <h2 class="job-title"><a href="javascript:void(0)" onclick="test(<?php echo htmlspecialchars($item['offer_id']); ?>)">
                                 <?php echo htmlspecialchars($item['title']); ?>
                             </a></h2>
                         <div class="job-meta">
-                            <a class="meta-company" href="#">
+                            <a class="meta-company" href="javascript:void(0)">
                                 <?php echo htmlspecialchars($item['company']); ?>
                             </a>
                             <span class="meta-date">Posted on:
@@ -73,15 +83,25 @@ $allData = mysqli_fetch_all($data, MYSQLI_ASSOC);
 
         </ul>
 
-        <footer class="site-footer">
-            <p>Copyright 2020 | Developer links:
-                <a href="editPage.php">Edits</a>,
-                <a href="index.php">Home</a>,
-                <a href="singlePage.php">Single</a>
-            </p>
+        <footer class="footer">
+            <p>Copyright 2021</p>
         </footer>
     </div>
 
+    <script>
+        function test(id) {
+            setCookie('singleProductId', id, 1000);
+
+            window.open('singlePage.php', '_self');
+        }
+
+        function setCookie(cname, cvalue, exdays) {
+            let d = new Date();
+            d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+    </script>
 </body>
 
 </html>

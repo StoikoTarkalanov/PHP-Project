@@ -1,0 +1,60 @@
+.adjust {
+    position: absolute;
+    left: 27%;
+    top: -2%;
+    font-family: "DM Sans", sans-serif;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a {
+    color: #3c71fe
+}
+
+.form {
+    width: 85%;
+    max-width: 600px;
+    position: relative;
+    top: 310px;
+    /* bottom: 50; */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 30px, 40px;
+    border: 9px black;
+    box-sizing: border-box;
+    text-align: center;
+    box-shadow: 0 0 3px black;
+    font-family: "DM Sans", sans-serif;
+    color: #3c71fe;
+}
+
+.text-box {
+    border: 1px solid gray;
+    margin: 8px 0;
+    padding: 12px 48px;
+    border-radius: 8px;
+    font-family: "DM Sans", sans-serif;
+}
+
+.area {
+    resize: none;
+    width: 170px;
+}
+
+.date {
+    width: 170px;
+}
+
+.btn {
+    display: inline-block;
+    background: #9b59b6;
+    padding: 14px;
+    border-radius: 10px 10px 10px 10px;
+    color: white;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 8px;
+    width: 40%;
+}

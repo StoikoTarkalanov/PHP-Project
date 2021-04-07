@@ -9,10 +9,6 @@ if (!isset($user_data)) {
     header("Location: login.php");
 }
 
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-}
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $date_post = $_POST['date'];
     $title = $_POST['title'];
@@ -26,15 +22,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $offer_id = random_num(20);
         $query = "INSERT INTO created_posts (offer_id, date_post, title, description, company, location, salary) VALUES ('$offer_id', '$date_post', '$title', '$description', '$company','$location', '$salary')";
 
-        $_SESSION["offer"] = $offer_id;
-
         mysqli_query($conn2, $query);
-    } else {
-        echo "You're information is invalid!";
-    }
 
-    header("Location: singlePage.php");
-    die;
+        header("Location: editPage.php");
+        die;
+    } else {
+        function_alert("All fields are required");
+    }
 }
 ?>
 
@@ -45,41 +39,45 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="../css/master.css"> -->
+    <link rel="stylesheet" href="../css/createForm.css">
     <title>Document</title>
 </head>
 
 <body>
-
+    <header class="adjust">
+        <h1><a href="index.php">Job Offers</a></h1>
+    </header>
     <section>
-        <form method="POST">
+        <form class="form" method="POST">
             <h1>Create Job Offer</h1>
 
             <p>
-                <label for="title">Title:</label>
-                <input type="text" name="title">
+                <!-- <label class="" for="title">Title:</label> -->
+                <input class="text-box" type="text" name="title" placeholder="Title">
             </p>
             <p>
-                <label for="company">Company:</label>
-                <input type="text" name="company">
+                <!-- <label class="" for="company">Company:</label> -->
+                <input class="text-box" type="text" name="company" placeholder="Company Name">
             </p>
             <p>
-                <label for="location">Job Location:</label>
-                <input type="text" name="location">
+                <!-- <label class="" for="location">Job Location:</label> -->
+                <input class="text-box" type="text" name="location" placeholder="Job Location">
             </p>
             <p>
-                <label for="date">Date Of Creating:</label>
-                <input type="date" name="date">
+                <!-- <label class="" for="date">Date Of Creating:</label> -->
+                <input class="text-box date" type="date" name="date">
             </p>
             <p>
-                <label for="description">Description:</label>
-                <textarea name="description"></textarea>
+                <!-- <label class="" for="description">Description:</label> -->
+                <textarea class="text-box area" name="description" placeholder="Enter Description"></textarea>
             </p>
             <p>
-                <label for="salary">Salary:</label>
-                <input type="text" name="salary">
+                <!-- <label class="" for="salary">Salary:</label> -->
+                <input class="text-box" type="text" name="salary" placeholder="Salary">
             </p>
             <p>
-                <input type="submit" value="Create">
+                <input class="btn" type="submit" value="Create">
             </p>
         </form>
     </section>
