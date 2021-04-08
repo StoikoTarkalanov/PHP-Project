@@ -10,17 +10,18 @@ if (!isset($user_data)) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $date_post = $_POST['date'];
+    $date_post = date('m-d-Y');
     $title = $_POST['title'];
     $description = $_POST['description'];
     $company = $_POST['company'];
     $location = $_POST['location'];
     $salary = $_POST['salary'];
 
-    if (!empty($date_post) && !empty($title) && !empty($description) && !empty($company) && !empty($location) && !empty($salary)) {
+    if (!empty($title) && !empty($description) && !empty($company) && !empty($location) && !empty($salary)) {
+        $user_id_session = $_SESSION["user_id"];
 
         $offer_id = random_num(20);
-        $query = "INSERT INTO created_posts (offer_id, date_post, title, description, company, location, salary) VALUES ('$offer_id', '$date_post', '$title', '$description', '$company','$location', '$salary')";
+        $query = "INSERT INTO created_posts (offer_id, get_user_id, title, description, company, location, salary, date_post) VALUES ('$offer_id', '$user_id_session', '$title', '$description', '$company','$location', '$salary', '$date_post')";
 
         mysqli_query($conn2, $query);
 
@@ -64,10 +65,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <!-- <label class="" for="location">Job Location:</label> -->
                 <input class="text-box" type="text" name="location" placeholder="Job Location">
             </p>
-            <p>
-                <!-- <label class="" for="date">Date Of Creating:</label> -->
-                <input class="text-box date" type="date" name="date">
-            </p>
+            <!-- <p> -->
+            <!-- <label class="" for="date">Date Of Creating:</label> -->
+            <!-- <input class="text-box date" type="date" name="date">
+            </p> -->
             <p>
                 <!-- <label class="" for="description">Description:</label> -->
                 <textarea class="text-box area" name="description" placeholder="Enter Description"></textarea>

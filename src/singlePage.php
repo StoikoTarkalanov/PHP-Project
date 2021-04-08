@@ -7,25 +7,16 @@ include("conection.php");
 $offer_data = $_COOKIE["singleProductId"];
 
 // get current job offer
-$query = "SELECT * FROM created_posts WHERE offer_id='$offer_data'";
+$query = "SELECT * FROM created_posts WHERE offer_id = '$offer_data'";
 $result = mysqli_query($conn2, $query);
 
 $offerData = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
 // get all offers
-$secondQuery = "SELECT * FROM created_posts";
+$secondQuery = "SELECT * FROM created_posts WHERE offer_id != '$offer_data'";
 $allResults = mysqli_query($conn2, $secondQuery);
 
-$allData = mysqli_fetch_array($allResults, MYSQLI_ASSOC);
-
-// echo var_dump($offerData);
-// echo '<br>';
-// echo '<br>';
-// echo var_dump($allData['title']);
-
-// foreach($allData as $teds) {
-// echo var_dump($teds['title']);
-// }
+$allData = mysqli_fetch_all($allResults, MYSQLI_ASSOC);
 
 ?>
 
@@ -68,9 +59,9 @@ $allData = mysqli_fetch_array($allResults, MYSQLI_ASSOC);
 							</div>
 							<div class="job-details">
 								<span class="job-location">
-									<?php echo htmlspecialchars($offerData['location']); ?>
+									Location: <?php echo htmlspecialchars($offerData['location']); ?>
 								</span> <!-- Job Location -->
-								<span class="job-type">Contract staff</span> <!-- Contarct staff -->
+								<span class="job-type">Information</span> <!-- Contarct staff -->
 							</div>
 						</header>
 
@@ -90,11 +81,23 @@ $allData = mysqli_fetch_array($allResults, MYSQLI_ASSOC);
 						<img src="https://pngimg.com/uploads/php/php_PNG7.png" alt="">
 					</div>
 				</div>
-				<a href="#" class="button button-wide">Apply now</a>
+				<a id="applyBtn" href="#" class="button button-wide" onclick="requestData()">Apply now</a>
 				<a href="#"><?php echo htmlspecialchars($offerData['company']); ?>.com</a>
 			</aside>
 		</div>
+		<script>
+			function requestData() {
+				const checkButton = document.getElementById('applyBtn').textContent;
 
+				if (checkButton == 'Apply now') {
+					document.getElementById('applyBtn').textContent = 'Cancel';
+					document.getElementById('applyBtn').style.backgroundColor = 'red';
+				} else {
+					document.getElementById('applyBtn').textContent = 'Apply now';
+					document.getElementById('applyBtn').style.backgroundColor = '#3c71fe';
+				}
+			}
+		</script>
 		<h2 class="section-heading">Other related jobs:</h2>
 		<ul class="jobs-listing">
 
@@ -103,7 +106,7 @@ $allData = mysqli_fetch_array($allResults, MYSQLI_ASSOC);
 
 				<li class="job-card">
 					<div class="job-primary">
-						<h2 class="job-title"><a href="#">
+						<h2 class="job-title"><a href="#" onclick="test(<?php echo htmlspecialchars($item['offer_id']); ?>)">
 								<?php echo htmlspecialchars($item['title']); ?>
 							</a></h2>
 						<div class="job-meta">
@@ -116,9 +119,9 @@ $allData = mysqli_fetch_array($allResults, MYSQLI_ASSOC);
 						</div>
 						<div class="job-details">
 							<span class="job-location">
-								<?php echo htmlspecialchars($item['location']); ?>
+							Location: <?php echo htmlspecialchars($item['location']); ?>
 							</span>
-							<span class="job-type">Contract staff</span>
+							<span class="job-type">Information</span>
 						</div>
 					</div>
 					<div class="job-logo">
@@ -127,20 +130,23 @@ $allData = mysqli_fetch_array($allResults, MYSQLI_ASSOC);
 						</div>
 					</div>
 				</li>
-
 			<?php } ?>
-
 		</ul>
-
-		<footer class="site-footer">
-			<p>Copyright 2020 | Developer links:
-				<a href="editPage.php">Edits</a>,
-				<a href="index.php">Home</a>,
-				<a href="singlePage.php">Single</a>
-			</p>
-		</footer>
 	</div>
+	<script>
+		function test(id) {
+			setCookie('singleProductId', id, 1000);
 
+			window.open('singlePage.php', '_self');
+		}
+
+		function setCookie(cname, cvalue, exdays) {
+			var d = new Date();
+			d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
+			var expires = "expires=" + d.toUTCString();
+			document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+		}
+	</script>
 </body>
 
 </html>

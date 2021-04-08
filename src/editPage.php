@@ -1,16 +1,16 @@
 <?php
 session_start();
 
-include('conection.php');
+include("conection.php");
 
-if (isset($_SESSION['user_id']) && isset($_COOKIE["singleProductId"])) {
-	$offer_data = $_COOKIE["singleProductId"];
+if (isset($_SESSION["user_id"])) {
+	$offer_data = $_SESSION["user_id"];
 
-	// get current job offer
-	$query = "SELECT * FROM created_posts WHERE offer_id = '$offer_data'";
+	// get user job offers to edit
+	$query = "SELECT * FROM created_posts WHERE get_user_id = '$offer_data'";
 	$result = mysqli_query($conn2, $query);
 
-	$userOffers = mysqli_fetch_array($result, MYSQLI_ASSOC);
+	$userOffers = mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 ?>
 
@@ -39,11 +39,11 @@ if (isset($_SESSION['user_id']) && isset($_COOKIE["singleProductId"])) {
 
 				<li class="job-card">
 					<div class="job-primary">
-						<h2 class="job-title"><a href="javascript:void(0)" onclick="test(<?php echo htmlspecialchars($item['offer_id']); ?>)">
+						<h2 class="job-title"><a href="#" onclick="test(<?php echo htmlspecialchars($item['offer_id']); ?>)">
 								<?php echo htmlspecialchars($item['title']); ?>
 							</a></h2>
 						<div class="job-meta">
-							<a class="meta-company" href="javascript:void(0)">
+							<a class="meta-company" href="#">
 								<?php echo htmlspecialchars($item['company']); ?>
 							</a>
 							<span class="meta-date">Posted on:
@@ -54,36 +54,34 @@ if (isset($_SESSION['user_id']) && isset($_COOKIE["singleProductId"])) {
 					</div>
 					<div class="job-edit">
 						<a href="#">Edit</a>
-						<a href="#">Delete</a>
+						<a href="#" onclick="onDelete(<?php echo htmlspecialchars($item['offer_id']); ?>)">Delete</a>
 					</div>
 				</li>
 
 			<?php } ?>
-
 		</ul>
-
-		<footer class="site-footer">
-			<p>Copyright 2020 | Developer links:
-				<a href="editPage.php">Edits</a>,
-				<a href="index.php">Home</a>,
-				<a href="singlePage.php">Single</a>
-			</p>
-		</footer>
 	</div>
-	<script>
-		function test(id) {
-			setCookie('singleProductId', id, 1000);
-
-			window.open("singlePage.php", "_self");
-		}
-
-		function setCookie(cname, cvalue, exdays) {
-			let d = new Date();
-			d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
-			let expires = "expires=" + d.toUTCString();
-			document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-		}
-	</script>
 </body>
+
+<script>
+	function onDelete(id) {
+		window.alert(id);
+	}
+
+	function test(id) {
+		setCookie('singleProductId', id, 1000);
+
+		window.open("singlePage.php", "_self");
+	}
+
+	function setCookie(cname, cvalue, exdays) {
+		let d = new Date();
+		d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
+		let expires = "expires=" + d.toUTCString();
+		document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	}
+</script>
+
+
 
 </html>

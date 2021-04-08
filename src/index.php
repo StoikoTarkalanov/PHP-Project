@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include('conection.php');
+include("conection.php");
 include("functions.php");
 
 $styleData = set_user_navigation();
@@ -54,11 +54,11 @@ $allData = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
                 <li class="job-card">
                     <div class="job-primary">
-                        <h2 class="job-title"><a href="javascript:void(0)" onclick="test(<?php echo htmlspecialchars($item['offer_id']); ?>)">
+                        <h2 class="job-title"><a href="#" onclick="test(<?php echo htmlspecialchars($item['offer_id']); ?>)">
                                 <?php echo htmlspecialchars($item['title']); ?>
                             </a></h2>
                         <div class="job-meta">
-                            <a class="meta-company" href="javascript:void(0)">
+                            <a class="meta-company" href="#">
                                 <?php echo htmlspecialchars($item['company']); ?>
                             </a>
                             <span class="meta-date">Posted on:
@@ -67,9 +67,8 @@ $allData = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         </div>
                         <div class="job-details">
                             <span class="job-location">
-                                <?php echo htmlspecialchars($item['location']); ?>
+                               Location: <?php echo htmlspecialchars($item['location']); ?>
                             </span>
-                            <span class="job-type">Contract staff</span>
                         </div>
                     </div>
                     <div class="job-logo">
@@ -78,16 +77,12 @@ $allData = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         </div>
                     </div>
                 </li>
-
             <?php } ?>
-
         </ul>
-
         <footer class="footer">
             <p>Copyright 2021</p>
         </footer>
     </div>
-
     <script>
         function test(id) {
             setCookie('singleProductId', id, 1000);
@@ -96,9 +91,9 @@ $allData = mysqli_fetch_all($result, MYSQLI_ASSOC);
         }
 
         function setCookie(cname, cvalue, exdays) {
-            let d = new Date();
+            var d = new Date();
             d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
-            let expires = "expires=" + d.toUTCString();
+            var expires = "expires=" + d.toUTCString();
             document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
         }
     </script>
