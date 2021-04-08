@@ -35,7 +35,7 @@ function random_num($length)
 
 function function_alert($message)
 {
-    echo "<script>alert('$message');</script>";
+    echo "<script>window.alert('$message');</script>";
 }
 
 function set_user_navigation()
@@ -52,3 +52,4 @@ function set_user_navigation()
 
     return array($styleUser, $styleGuest);
 }
+

@@ -3,6 +3,9 @@ session_start();
 
 include("conection.php");
 include("functions.php");
+
+$styleData = set_user_navigation();
+
 $user_data = check_login($con);
 
 if (!isset($user_data)) {
@@ -40,10 +43,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="../css/master.css"> -->
+    <link rel="stylesheet" href="../css/nav.css">
     <link rel="stylesheet" href="../css/createForm.css">
     <title>Document</title>
 </head>
+
+<nav id="user" class="nav-bar" <?php echo $styleData[0]; ?>>
+	<a class="a-button a-btn" href="singlePage.php">Single Offer</a>
+	<a class="a-button a-btn" href="editPage.php">My Offers</a>
+	<a class="a-button a-btn" href="createPage.php">Create Offer</a>
+	<a class="a-button a-btn" href="logout.php">Logout</a>
+</nav>
+
+<nav id="guest" class="nav-bar" <?php echo $styleData[1]; ?>>
+	<a class="a-button a-btn" href="singlePage.php">Single Offer</a>
+	<a class="a-button a-btn" href="login.php">Login</a>
+	<a class="a-button a-btn" href="register.php">Register</a>
+</nav>
 
 <body>
     <header class="adjust">

@@ -11,6 +11,9 @@ $result = mysqli_query($conn2, $query);
 
 $allData = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
+if (count($allData) == 0) {
+    function_alert("The\'re are no offers yet!");
+}
 ?>
 
 <!DOCTYPE html>
@@ -30,8 +33,8 @@ $allData = mysqli_fetch_all($result, MYSQLI_ASSOC);
 </head>
 
 <nav id="user" class="nav-bar" <?php echo $styleData[0]; ?>>
-    <a class="a-button a-btn" href="editPage.php">My Offers</a>
     <a class="a-button a-btn" href="singlePage.php">Single Offer</a>
+    <a class="a-button a-btn" href="editPage.php">My Offers</a>
     <a class="a-button a-btn" href="createPage.php">Create Offer</a>
     <a class="a-button a-btn" href="logout.php">Logout</a>
 </nav>
@@ -67,7 +70,7 @@ $allData = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         </div>
                         <div class="job-details">
                             <span class="job-location">
-                               Location: <?php echo htmlspecialchars($item['location']); ?>
+                                Location: <?php echo htmlspecialchars($item['location']); ?>
                             </span>
                         </div>
                     </div>

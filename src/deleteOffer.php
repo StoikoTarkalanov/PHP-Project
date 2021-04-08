@@ -1,7 +1,13 @@
 <?php
-include("conection.php");
+session_start();
 
-$currentOffer = $_GET["data"];
+include("conection.php");
+include("functions.php");
+
+$currentOffer = $_COOKIE["deleteProduct"];
 
 $query = "DELETE FROM created_posts WHERE offer_id = '$currentOffer'";
-mysqli_query($conn2, $query);
+$data = mysqli_query($conn2, $query);
+
+setcookie("deleteProduct", "", time() - 3600);
+header("Location: index.php");

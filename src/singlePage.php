@@ -2,6 +2,9 @@
 session_start();
 
 include("conection.php");
+include("functions.php");
+
+$styleData = set_user_navigation();
 
 // get offer id from cookie
 $offer_data = $_COOKIE["singleProductId"];
@@ -18,6 +21,9 @@ $allResults = mysqli_query($conn2, $secondQuery);
 
 $allData = mysqli_fetch_all($allResults, MYSQLI_ASSOC);
 
+if (count($allData) == 0) {
+	function_alert("The\'re are no offers yet!");
+}
 ?>
 
 <!DOCTYPE html>
@@ -29,10 +35,23 @@ $allData = mysqli_fetch_all($allResults, MYSQLI_ASSOC);
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Jobs</title>
 	<link rel="preconnect" href="https://fonts.gstatic.com">
-
+	<link rel="stylesheet" href="../css/nav.css">
 	<link rel="stylesheet" href="../css/master.css">
 	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
+
+<nav id="user" class="nav-bar" <?php echo $styleData[0]; ?>>
+	<a class="a-button a-btn" href="singlePage.php">Single Offer</a>
+	<a class="a-button a-btn" href="editPage.php">My Offers</a>
+	<a class="a-button a-btn" href="createPage.php">Create Offer</a>
+	<a class="a-button a-btn" href="logout.php">Logout</a>
+</nav>
+
+<nav id="guest" class="nav-bar" <?php echo $styleData[1]; ?>>
+	<a class="a-button a-btn" href="singlePage.php">Single Offer</a>
+	<a class="a-button a-btn" href="login.php">Login</a>
+	<a class="a-button a-btn" href="register.php">Register</a>
+</nav>
 
 <body>
 	<div class="site-wrapper">
@@ -66,9 +85,13 @@ $allData = mysqli_fetch_all($allResults, MYSQLI_ASSOC);
 						</header>
 
 						<div class="job-body">
-							<!-- Text Area Field -->
 							<p>
 								<?php echo htmlspecialchars($offerData['description']); ?>
+							</p>
+						</div>
+						<div class="job-body">
+							<p>
+								Salary: <?php echo htmlspecialchars($offerData['salary']); ?>
 							</p>
 						</div>
 					</div>
@@ -119,7 +142,7 @@ $allData = mysqli_fetch_all($allResults, MYSQLI_ASSOC);
 						</div>
 						<div class="job-details">
 							<span class="job-location">
-							Location: <?php echo htmlspecialchars($item['location']); ?>
+								Location: <?php echo htmlspecialchars($item['location']); ?>
 							</span>
 							<span class="job-type">Information</span>
 						</div>
