@@ -1,10 +1,12 @@
 <?php
 
+// connect to users database
 $dbhost = "localhost";
 $dbuser = "root";
 $dbpass = "";
 $dbname = "login_db";
 
+// connect to created offers database
 $dbhost2 = "localhost";
 $dbuser2 = "root";
 $dbpass2 = "";

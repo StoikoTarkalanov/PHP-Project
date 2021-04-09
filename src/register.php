@@ -4,22 +4,30 @@ session_start();
 include("conection.php");
 include("functions.php");
 
+// check if user is trying to register
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+    // get all data from fields
     $user_name = $_POST['username'];
     $password = $_POST['password'];
 
+    // check for empty field
     if (!empty($user_name) && !empty($password)) {
 
+        // insert user data to database
         $user_id = random_num(20);
         $query = "INSERT INTO users (user_id, user_name, password) VALUES ('$user_id', '$user_name', '$password')";
 
         mysqli_query($con, $query);
+
+        // set user ID in session
         $_SESSION["user_id"] = $user_id;
 
+        // redirect to login page
         header("Location: login.php");
         die;
     } else {
+        // sending mesage to the user that there is missing field
         function_alert("All fields are required");
     }
 }
@@ -45,11 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form class="form" method="POST">
             <h1>Register</h1>
             <p>
-                <!-- <label for=" username">Username:</label> -->
                 <input type="text" name="username" placeholder="Enter Username">
             </p>
             <p>
-                <!-- <label for="login-pass">Password:</label> -->
                 <input type="password" name="password" placeholder="********">
             </p>
             <p>

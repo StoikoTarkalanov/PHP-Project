@@ -4,9 +4,10 @@ session_start();
 include("conection.php");
 include("functions.php");
 
+// set navigation for user/non user
 $styleData = set_user_navigation();
 
-// get offer id from cookie
+// get offer ID from cookie
 $offer_data = $_COOKIE["singleProductId"];
 
 // get current job offer
@@ -21,6 +22,7 @@ $allResults = mysqli_query($conn2, $secondQuery);
 
 $allData = mysqli_fetch_all($allResults, MYSQLI_ASSOC);
 
+// check if user have any offers
 if (count($allData) == 0) {
 	function_alert("The\'re are no offers yet!");
 }
@@ -71,16 +73,16 @@ if (count($allData) == 0) {
 							<div class="job-meta">
 								<a class="meta-company" href="#">
 									<?php echo htmlspecialchars($offerData['company']); ?>
-								</a> <!-- Company Ltd -->
+								</a> 
 								<span class="meta-date">Posted on:
 									<?php echo htmlspecialchars($offerData['date_post']); ?>
-								</span> <!-- Date of Post -->
+								</span> 
 							</div>
 							<div class="job-details">
 								<span class="job-location">
 									Location: <?php echo htmlspecialchars($offerData['location']); ?>
-								</span> <!-- Job Location -->
-								<span class="job-type">Information</span> <!-- Contarct staff -->
+								</span> 
+								<span class="job-type">Information</span> 
 							</div>
 						</header>
 
@@ -158,6 +160,7 @@ if (count($allData) == 0) {
 	</div>
 	<script>
 		function test(id) {
+			// set cookie
 			setCookie('singleProductId', id, 1000);
 
 			window.open('singlePage.php', '_self');

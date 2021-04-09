@@ -4,13 +4,16 @@ session_start();
 include("conection.php");
 include("functions.php");
 
+// set navigation for user/non user
 $styleData = set_user_navigation();
 
-$query = "SELECT * from created_posts";
+// get all offers in database
+$query = "SELECT * FROM created_posts";
 $result = mysqli_query($conn2, $query);
 
 $allData = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
+// check if user have any offers
 if (count($allData) == 0) {
     function_alert("The\'re are no offers yet!");
 }
@@ -88,6 +91,7 @@ if (count($allData) == 0) {
     </div>
     <script>
         function test(id) {
+            // set cookie
             setCookie('singleProductId', id, 1000);
 
             window.open('singlePage.php', '_self');

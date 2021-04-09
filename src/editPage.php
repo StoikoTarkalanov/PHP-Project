@@ -4,9 +4,12 @@ session_start();
 include("conection.php");
 include("functions.php");
 
+// set navigation for user/non user
 $styleData = set_user_navigation();
 
+// check if there is logged user
 if (isset($_SESSION["user_id"])) {
+	// get user id from session
 	$offer_data = $_SESSION["user_id"];
 
 	// get user job offers to edit
@@ -15,6 +18,7 @@ if (isset($_SESSION["user_id"])) {
 
 	$userOffers = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
+	// check if user have any offers
 	if (count($userOffers) == 0) {
 		function_alert("You don\'t have any offers created yet! To go back press Job Offers logo!");
 	}
@@ -85,14 +89,17 @@ if (isset($_SESSION["user_id"])) {
 
 <script>
 	function onDelete(id) {
+		// set cookie
 		setCookie('deleteProduct', id, 1);
 	}
 
 	function onEdit(id) {
+		// set cookie
 		setCookie('currentEdit', id, 1);
 	}
 
 	function test(id) {
+		// set cookie
 		setCookie('singleProductId', id, 1);
 
 		window.open("singlePage.php", "_self");

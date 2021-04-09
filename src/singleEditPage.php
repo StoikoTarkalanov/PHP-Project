@@ -4,10 +4,11 @@ session_start();
 include("conection.php");
 include("functions.php");
 
+// set navigation for user/non user
 $styleData = set_user_navigation();
 
+// get offer ID from cookie 
 $currentOffer = $_COOKIE["currentEdit"];
-// echo var_dump($currentOffer);
 
 // get current job offer to edit
 $query = "SELECT * FROM created_posts WHERE offer_id='$currentOffer'";
@@ -15,22 +16,26 @@ $result = mysqli_query($conn2, $query);
 
 $offerData = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
+// check if user is trying to update offer
 if (isset($_POST['update'])) {
     $title = $_POST['title'];
     $description = $_POST['description'];
     $company = $_POST['company'];
     $location = $_POST['location'];
     $salary = $_POST['salary'];
-    // echo $title;
 
+    // check for empty field
     if (!empty($title) && !empty($description) && !empty($company) && !empty($location) && !empty($salary)) {
 
+        // update user offer
         $secondQuery = "UPDATE CREATED_POSTS SET title='$title', description='$description', company='$company',location='$location', salary='$salary' WHERE offer_id = '$currentOffer'";
         $notifyMe = mysqli_query($conn2, $secondQuery);
 
+        // redirect to user offers
         header("Location: editPage.php");
         die;
     } else {
+        // sending mesage to the user that there is missing field
         function_alert("All fields are required");
     }
 }
