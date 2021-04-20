@@ -7,14 +7,38 @@ include("functions.php");
 // set navigation for user/non user
 $styleData = set_user_navigation();
 
-// get all offers in database
-$query = "SELECT * FROM created_posts";
-$result = mysqli_query($conn2, $query);
+// pagination & all data
+if (isset($_GET['pageno'])) {
+    $pageno = $_GET['pageno'];
+} else {
+    $pageno = 1;
+}
 
-$allData = mysqli_fetch_all($result, MYSQLI_ASSOC);
+$no_of_records_per_page = 6;
+$offset = ($pageno - 1) * $no_of_records_per_page;
 
-// check if user have any offers
-if (count($allData) == 0) {
+$total_pages_sql = "SELECT COUNT(*) FROM created_posts";
+$result = mysqli_query($conn2, $total_pages_sql);
+$total_rows = mysqli_fetch_array($result)[0];
+$total_pages = ceil($total_rows / $no_of_records_per_page);
+
+$sql = "SELECT * FROM created_posts LIMIT $offset, $no_of_records_per_page";
+$allData = mysqli_query($conn2, $sql);
+
+// search
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $currentWord = $_POST['word'];
+    $querySearch = "SELECT * FROM created_posts WHERE title='$currentWord'";
+    $resultSearch = mysqli_query($conn2, $querySearch);
+    $allData = mysqli_fetch_all($resultSearch, MYSQLI_ASSOC);
+}
+
+// check if there are any offers
+$checkQuery = "SELECT * FROM created_posts";
+$allResults = mysqli_query($conn2, $checkQuery);
+
+$checkData = mysqli_fetch_array($allResults, MYSQLI_ASSOC);
+if ($checkData == 0) {
     function_alert("The\'re are no offers yet!");
 }
 ?>
@@ -32,6 +56,8 @@ if (count($allData) == 0) {
     <link rel="stylesheet" href="../css/master.css">
     <link rel="stylesheet" href="../css/nav.css">
     <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/onSearch.css">
+    <link rel="stylesheet" href="../css/pagination.css">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 
@@ -49,6 +75,11 @@ if (count($allData) == 0) {
 </nav>
 
 <body>
+    <form class="onSearch" method="post">
+        <input class="text-box" type="text" name="word" placeholder="Search for offer" /><br />
+        <input class="btnSubmit" type="submit" value="Search" />
+    </form>
+
     <div class="site-wrapper">
         <header class="site-header">
             <h1 class="site-title"><a href="index.php">Job Offers</a></h1>
@@ -85,6 +116,30 @@ if (count($allData) == 0) {
                 </li>
             <?php } ?>
         </ul>
+
+        <ul class="pagination">
+            <li class="first"><a href="?pageno=1">First</a></li>
+            <li class="<?php if ($pageno <= 1) {
+                            echo 'disabled';
+                        } ?> second">
+                <a href="<?php if ($pageno <= 1) {
+                                echo '#';
+                            } else {
+                                echo "?pageno=" . ($pageno - 1);
+                            } ?>">Prev</a>
+            </li>
+            <li class="<?php if ($pageno >= $total_pages) {
+                            echo 'disabled';
+                        } ?> third">
+                <a href="<?php if ($pageno >= $total_pages) {
+                                echo '#';
+                            } else {
+                                echo "?pageno=" . ($pageno + 1);
+                            } ?>">Next</a>
+            </li>
+            <li class="fourth"><a href="?pageno=<?php echo $total_pages; ?>">Last</a></li>
+        </ul>
+
         <footer class="footer">
             <p>Copyright 2021</p>
         </footer>

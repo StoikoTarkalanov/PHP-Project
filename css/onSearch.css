@@ -1,0 +1,39 @@
+.onSearch {
+    position: absolute;
+    left: 55%;
+    top: 14%;
+    font-family: "DM Sans", sans-serif;
+}
+
+.btnSubmit {
+    position: absolute;
+    left: 108%;
+    bottom: 60px;
+    border: 1px solid #3498db;
+    background: none;
+    padding: 10px 20px;
+    font-size: 17px;
+    font-family: "montserrat";
+    cursor: pointer;
+    margin: 10px;
+    transition: 0.8s;
+    position: relative;
+    overflow: hidden;
+    font-family: "DM Sans", sans-serif;
+}
+
+.btnSubmit {
+    color: #3498db;
+}
+
+.btnSubmit:hover {
+    color: #fff;
+}
+
+.text-box {
+    border: 1px solid gray;
+    margin: 8px 0;
+    padding: 12px 48px;
+    border-radius: 8px;
+    font-family: "DM Sans", sans-serif;
+}
